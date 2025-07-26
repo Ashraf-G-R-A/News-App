@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.local.db.dao.NewsDao
 import com.example.data.remote.api.NewsApiService
 import com.example.data.repo.news.NewsRepositoryImpl
 import com.example.domain.news.repo.NewsRepository
@@ -18,10 +19,10 @@ object DataModule {
     @Singleton
     fun provideNewsRepository(
         api: NewsApiService,
-        @Named("newsApiKey") apiKey: String
+        @Named("newsApiKey") apiKey: String,
+        newsDao: NewsDao
     ): NewsRepository =
-        NewsRepositoryImpl(api, apiKey)
-
+        NewsRepositoryImpl(api, newsDao, apiKey)
 
 
 }

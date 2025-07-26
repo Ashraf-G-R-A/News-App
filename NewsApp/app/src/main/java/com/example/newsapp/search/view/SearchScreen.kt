@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +13,6 @@ import com.example.newsapp.common.search.SearchEvent
 import com.example.newsapp.common.ui.NewsList
 import com.example.newsapp.common.ui.SearchBar
 import com.example.newsapp.search.SearchViewModel
-import kotlinx.coroutines.flow.debounce
 
 @Composable
 fun SearchScreen(
@@ -25,7 +22,7 @@ fun SearchScreen(
     val event = viewModel::onEvent
     val state = viewModel.state
 
- 
+
     Column(
         modifier = Modifier
             .padding(

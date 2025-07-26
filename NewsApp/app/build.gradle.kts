@@ -6,12 +6,14 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
+
 }
 
 val localProperties = Properties()
 localProperties.load(rootProject.file("local.properties").inputStream())
 val newsApiKey = localProperties["NEWS_API_KEY"] as String
 val baseUrl = localProperties["BASE_URL"] as String
+val newsDatabaseName = localProperties["NEWS_DATABASE_NAME"] as String
 
 android {
     buildFeatures {
@@ -38,6 +40,11 @@ android {
             "String",
             "BASE_URL",
             "\"$baseUrl\""
+        )
+        buildConfigField(
+            "String",
+            "NEWS_DATABASE_NAME",
+            "\"$newsDatabaseName\""
         )
 
     }
@@ -72,6 +79,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -102,7 +110,6 @@ dependencies {
 
     implementation("androidx.paging:paging-runtime:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
-
 
 
 }

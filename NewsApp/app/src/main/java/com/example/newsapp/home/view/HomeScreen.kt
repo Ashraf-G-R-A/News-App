@@ -1,5 +1,6 @@
 package com.example.newsapp.home.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
@@ -21,16 +22,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.domain.news.model.NewsEntity
 import com.example.newsapp.R
 import com.example.newsapp.common.ui.NewsList
 import com.example.newsapp.common.ui.SearchBar
+import com.example.newsapp.common.viewmodel.SharedNewsViewModel
 import com.example.newsapp.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    sharedNewsViewModel: SharedNewsViewModel,
     navSearch: () -> Unit,
-    navDetails: () -> Unit,
+    navDetails: (NewsEntity) -> Unit,
 ) {
     val articles = viewModel.news.collectAsLazyPagingItems()
     val titles by remember {
@@ -88,8 +92,9 @@ fun HomeScreen(
                 .weight(1f),
             articles = articles,
             onCardClick = {
-                navDetails()
-            },
+                sharedNewsViewModel.selectNews(it)
+                navDetails(it)
+            }
         )
 
 

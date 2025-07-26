@@ -1,21 +1,28 @@
 package com.example.newsapp.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.newsapp.home.HomeViewModel
+import com.example.newsapp.bookmark.view.BookmarkScreen
+import com.example.newsapp.common.viewmodel.SharedNewsViewModel
+import com.example.newsapp.detailsnews.DetailsScreen
 import com.example.newsapp.home.view.HomeScreen
 import com.example.newsapp.onboarding.view.OnboardingScreen
 import com.example.newsapp.search.view.SearchScreen
 import com.example.newsapp.splash.SplashScreen
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
-
-    NavHost(navController = navController, startDestination = Routes.Splash.route) {
+fun AppNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
+    val sharedNewsViewModel: SharedNewsViewModel = hiltViewModel()
+    NavHost(
+        navController = navController, startDestination = Routes.Splash.route,
+        modifier = Modifier.padding(paddingValues)
+    ) {
 
         composable(route = Routes.Splash.route) {
             SplashScreen(navHome = {
@@ -38,6 +45,7 @@ fun AppNavGraph(navController: NavHostController) {
         composable(route = Routes.Home.route) {
 
             HomeScreen(
+                sharedNewsViewModel = sharedNewsViewModel,
                 navSearch = {
                     navController.navigate(Routes.Search.route)
                 },
@@ -52,8 +60,18 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(route = Routes.DetailsScreen.route) {
-//            DetailsScreen(navController = navController)
+            DetailsScreen(
+                sharedNewsViewModel = sharedNewsViewModel,
+                navigateUp = { navController.popBackStack() },
+
+                )
         }
+        composable(route = Routes.Bookmark.route) {
+            BookmarkScreen(sharedNewsViewModel, navDetails = {
+                navController.navigate(Routes.DetailsScreen.route)
+            })
+        }
+
     }
 
 }

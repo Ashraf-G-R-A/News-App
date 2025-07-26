@@ -20,5 +20,9 @@ object AppModule {
     @Named("baseUrl")
     fun provideBaseUrl(): String = BuildConfig.BASE_URL
 
+    @Provides
+    @Named("databaseName")
+    fun provideDataBaseName(): String = BuildConfig.NEWS_DATABASE_NAME
+
 
 }

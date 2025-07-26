@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
-import com.example.newsapp.navigation.AppNavGraph
+import com.example.newsapp.home.view.NewsNavigation
 import com.example.newsapp.onboarding.view.OnboardingScreen
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
                     color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
                     darkIcons = !isSystemInDarkTheme
                 )
-                AppNavGraph(navController)
+                NewsNavigation()
+
             }
         }
     }

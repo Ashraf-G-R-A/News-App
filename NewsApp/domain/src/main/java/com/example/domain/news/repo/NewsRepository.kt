@@ -13,4 +13,8 @@ interface NewsRepository {
         query: String,
         sources: List<String>,
     ): Flow<PagingData<NewsEntity>>
+
+    fun getAllNews(): Flow<PagingData<NewsEntity>>
+    suspend fun addNews(news: NewsEntity)
+    suspend fun deleteNews(news: NewsEntity)
 }
